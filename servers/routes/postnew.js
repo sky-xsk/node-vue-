@@ -9,6 +9,7 @@ router.post('/', function(req, res, next) {
        authors: req.body.authors,
        date: new Date()
     });
+    
     postnewValue.save(function(err){
         if(err){
           res.json({ data:"文章发布失败", code: -1});
@@ -16,6 +17,7 @@ router.post('/', function(req, res, next) {
         }
         res.json({ success: true, code: 1});
     })
+
 });
 
 router.get('/getlist',function(req,res,next){
@@ -37,7 +39,7 @@ router.get('/getOne/:id',function(req,res,next){
         }
         res.json({ data: result[0], code: 1});
     })
-}),
+});
 
 router.delete('/deldetOne/:id',function(req,res,next){
   var ids = req.params.id;
@@ -48,7 +50,7 @@ router.delete('/deldetOne/:id',function(req,res,next){
       }
       res.json({ data: result, code: 1});
   })
-})
+});
 
 
 module.exports = router;

@@ -1,5 +1,6 @@
 <template>
   <div class="postnews">
+      <h3>文章发布</h3>
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="文章名称">
             <el-input v-model="form.name"></el-input>
@@ -8,7 +9,8 @@
             <el-input v-model="form.authors"></el-input>
         </el-form-item>
         <el-form-item label="文章内容">
-            <el-input type="textarea" v-model="form.desc"></el-input>
+            <vue-editor v-model="form.desc"></vue-editor>
+            <!-- <el-input type="textarea" v-model="form.desc"></el-input> -->
         </el-form-item>
         <el-form-item>
             <el-button type="danger" @click="resets">重置</el-button>
@@ -16,24 +18,28 @@
         </el-form-item>
     </el-form>
 
-     <div class="lists">
+    <h3>文章列表</h3>
+    <div class="lists">
         <ul>
             <li v-for="(item,index) in postLists" :key="item.number">
                 {{index}}:<router-link :to="{ name: 'postnewsDetails', params: { ids: item._id  }}"> {{item.name}}</router-link>
                 <span class="dos">
                     <span><el-button type="success" size="mini" @click="delstesOne(item._id)">删除</el-button></span>
                 </span>
-               
             </li>
         </ul>    
-     </div>
+    </div>
 
   </div>
 </template>
 
 <script>
+import { VueEditor } from 'vue2-editor'
 export default {
-  name: 'postnews',
+    components: {
+        VueEditor
+    },
+    name: 'postnews',
   data () {
     return {
         form: {
@@ -42,6 +48,7 @@ export default {
           authors:''
         },
         postLists:[],
+        
     }
   },
   

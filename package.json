@@ -15,7 +15,8 @@
     "mongoose": "^5.1.5",
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue2-editor": "^2.5.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -6,7 +6,7 @@ var logger = require('morgan');
 var mongoose = require('./config/mongoose.js');
 var db = mongoose();
 var bodyParser = require('body-parser');
-
+var util = require('util');
 //此处路由待优化
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

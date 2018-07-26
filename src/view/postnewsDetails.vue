@@ -2,7 +2,7 @@
   <div class="postnewsDetails">
     <h2>{{detials.name}}</h2>
     <p>作者：{{ detials.authors}} 日期：{{ detials.date}}</p>
-    <p>详细内容{{detials.desc}}</p>
+    <p v-html="detials.desc"></p>
   </div>
 </template>
 

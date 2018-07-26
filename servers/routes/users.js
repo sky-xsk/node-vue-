@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+var path = require("path");
+var formidable = require('formidable');
+var fs = require("fs");
 var User = require('../models/User');// 引入模型
 /* GET users listing. */
 
@@ -16,7 +19,8 @@ router.post('/createUser', function(req, res, next) {
         }
         var user = new User({
            account: req.body.account,
-           password: req.body.password
+           password: req.body.password,
+           avatar:''
         });
         user.save(function(err) {
             if (err) {
@@ -49,8 +53,32 @@ router.post('/logins', function(req,res,next){
           return;
         }
     })
-})
+});
 
-
+//上传头像
+router.post('/avatars',function(req,res,next){
+    var form = new formidable.IncomingForm();
+    form.encoding = 'utf-8';
+    form.uploadDir = path.normalize(__dirname + "/../avatar");
+   
+    form.parse(req, function (err, fields, files) {
+        if(err){
+            res.json({ data: "图片上传失败", code: -1});
+            return;
+        }
+        var oldpath = files.file.path;
+        var newpath = path.normalize(__dirname + "/../avatar") + "/" + new Date().getTime() + ".jpg";
+        //图片重名
+        fs.rename(oldpath, newpath, function (err) {
+            if (err) {
+                res.send("重命名失败");
+            }
+        });
+    })
+    form.on('end', function() {
+        res.json({data:'图片上传完成', code:1});
+        console.log("上传完成");
+    });
+});
 
 module.exports = router;
