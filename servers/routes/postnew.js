@@ -19,15 +19,29 @@ router.post('/', function(req, res, next) {
     })
 
 });
-
+//获取列表 添加分页
 router.get('/getlist',function(req,res,next){
-    Postnew.find({},function(err,result){
+    //当前页   pages    
+    //每页条数   perPage
+    let pageSize = parseInt(req.query.perPage);
+    let page = parseInt(req.query.pages);
+    let skip = (page-1)*pageSize;
+    var results = '';
+    Postnew.find({},function(err,results){
         if(err){
-          res.json({ data:"文章获取失败", code: -1});
-          return;
+            res.json({ data:"文章获取失败", code: -1});
+            return;
         }
-        res.json({ data: result, code: 1});
-    })
+        let goodsModel = Postnew.find({}).skip(skip).limit(pageSize);
+        //计算分页后的数据
+        goodsModel.exec(function(err,result){
+            if(err){
+                res.json({ data:"文章获取失败", code: -1});
+                return;
+            }
+            res.json({ data: result, code: 1, results:results.length});
+        })
+    });
 });
 
 router.get('/getOne/:id',function(req,res,next){

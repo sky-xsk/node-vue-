@@ -22,13 +22,26 @@
     <div class="lists">
         <ul>
             <li v-for="(item,index) in postLists" :key="item.number">
-                {{index}}:<router-link :to="{ name: 'postnewsDetails', params: { ids: item._id  }}"> {{item.name}}</router-link>
+                {{index + 1}}:<router-link :to="{ name: 'postnewsDetails', params: { ids: item._id  }}"> {{item.name}}</router-link>
                 <span class="dos">
                     <span><el-button type="success" size="mini" @click="delstesOne(item._id)">删除</el-button></span>
                 </span>
             </li>
         </ul>    
     </div>
+   
+
+     <div class="block">
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="pages"
+            :page-size="perPage"
+            layout="prev, pager, next, jumper"
+            :total="totals">
+        </el-pagination>
+    </div>
+
 
   </div>
 </template>
@@ -48,7 +61,9 @@ export default {
           authors:''
         },
         postLists:[],
-        
+        totals:0,
+        perPage:3,
+        pages:1
     }
   },
   
@@ -57,6 +72,21 @@ export default {
   },
 
   methods: {
+    //分页
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        this.perPage = val;
+        //this.postLists = [];
+        this.getlists();
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        //this.postLists = [];
+        this.page = val;
+        this.getlists();
+      },
+
+
     onSubmit() {
         var params = {
             name:this.form.name,
@@ -82,8 +112,9 @@ export default {
     },
 
     getlists(){
-        this.$http.get('/api/postnew/getlist').then((response) => {
+        this.$http.get('/api/postnew/getlist?'+ "pages" + "=" + this.pages + "&" + "perPage" + "=" + this.perPage ).then((response) => {
             this.postLists = response.body.data;
+            this.totals = response.body.results;
         })
     },
 
@@ -92,6 +123,7 @@ export default {
             this.getlists();
         })
     },
+
   }
 }
 </script>
@@ -100,4 +132,5 @@ export default {
 <style scoped>
 .lists ul li{list-style: none; border-bottom:1px solid #ccc; padding: 10px; }
 .dos{float: right;}
+.block{margin-bottom: 100px;}
 </style>

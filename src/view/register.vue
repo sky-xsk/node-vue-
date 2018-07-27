@@ -22,8 +22,6 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 
-    
-  
 
   </div>
 </template>
@@ -72,7 +70,6 @@ export default {
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
-
         if (!isJPG) {
           this.$message.error('上传头像图片只能是 JPG 格式!');
         }
