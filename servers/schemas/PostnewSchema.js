@@ -5,6 +5,7 @@ var postnewSchema = new Schema({
     name: String,
     desc: String,
     authors: String,
-    date: Date
+    date: Date,
+    zan:Boolean
 });
 module.exports = postnewSchema;

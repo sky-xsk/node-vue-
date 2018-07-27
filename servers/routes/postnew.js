@@ -7,7 +7,8 @@ router.post('/', function(req, res, next) {
        name: req.body.name,
        desc: req.body.desc,
        authors: req.body.authors,
-       date: new Date()
+       date: new Date(),
+       zan:false,
     });
     
     postnewValue.save(function(err){
@@ -69,5 +70,25 @@ router.delete('/deldetOne/:id',function(req,res,next){
   })
 });
 
+//给文章点赞
+router.put('/zan/:id',function(req,res,next){
+    var ids = req.params.id;
+    Postnew.find({_id:ids},function(err,result){
+        if(err){
+            res.json({ data:"文章详细查询失败", code: -1});
+            return;
+        }
+        var datas = result[0];
+        var counts = datas.__v + 1;
+        Postnew.update({_id:datas._id},{$set:{"zan":true,"__v":counts}},function(err,results){
+            if(err){
+                res.json({ error:"点赞失败", code: -1});
+                return;
+            }
+            res.json({ data:"点赞成功", code: 1});
+        })
+    })
+    
+});
 
 module.exports = router;

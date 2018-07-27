@@ -26,7 +26,9 @@ router.get('/details/:id',function(req,res,next){
         }
         res.json({ data:result, code: 1});
     })
-})
+});
+ 
+
 
 
 module.exports = router;
