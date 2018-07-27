@@ -20,6 +20,7 @@
 
     <h3>文章列表</h3>
     <div class="lists">
+        <el-button type="warning" @click="sortsName" size="mini">{{tips}}</el-button>
         <ul>
             <li v-for="(item,index) in postLists" :key="item.number">
                 {{index + 1}}:<router-link :to="{ name: 'postnewsDetails', params: { ids: item._id  }}"> {{item.name}}</router-link>
@@ -30,7 +31,6 @@
         </ul>    
     </div>
    
-
      <div class="block">
         <el-pagination
             @size-change="handleSizeChange"
@@ -41,7 +41,6 @@
             :total="totals">
         </el-pagination>
     </div>
-
 
   </div>
 </template>
@@ -63,7 +62,11 @@ export default {
         postLists:[],
         totals:0,
         perPage:3,
-        pages:1
+        pages:1,
+        //正序排序
+        sorts:1,
+        sortstatus:false,
+        tips:'升序'
     }
   },
   
@@ -74,14 +77,10 @@ export default {
   methods: {
     //分页
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
         this.perPage = val;
-        //this.postLists = [];
         this.getlists();
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        //this.postLists = [];
         this.page = val;
         this.getlists();
       },
@@ -112,7 +111,7 @@ export default {
     },
 
     getlists(){
-        this.$http.get('/api/postnew/getlist?'+ "pages" + "=" + this.pages + "&" + "perPage" + "=" + this.perPage ).then((response) => {
+        this.$http.get('/api/postnew/getlist?'+ "pages" + "=" + this.pages + "&" + "perPage" + "=" + this.perPage + "&" +"sorts" + "=" + this.sorts ).then((response) => {
             this.postLists = response.body.data;
             this.totals = response.body.results;
         })
@@ -122,6 +121,19 @@ export default {
         this.$http.delete('/api/postnew/deldetOne/'+ ids).then((response) => {
             this.getlists();
         })
+    },
+
+    sortsName(){
+       this.sortstatus = !this.sortstatus;
+       if(this.sortstatus == true){
+            this.sorts = -1;
+            this.tips = '升序';
+       }else{
+           this.sorts = 1;
+           this.tips = '降序';
+       }
+       this.getlists();
+       
     },
 
   }

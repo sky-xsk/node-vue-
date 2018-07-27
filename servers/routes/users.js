@@ -46,6 +46,8 @@ router.post('/logins', function(req,res,next){
         }
         //用户名存在，判断密码是否正确
         if(req.body.password == result[0].password){
+          req.session.username = req.body.account;
+          //console.log(req.session.username)
           res.json({ data: "登录成功", code: 1 })
           return;
         }else{
