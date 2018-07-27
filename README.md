@@ -2,7 +2,8 @@
 
 > nodeVueMongodb
 
-## Build Setup
+>主要在于node，
+>vue暂时没有细写！vue暂时没有细写！vue暂时没有细写！重要的事情说三遍！
 
 ## 功能
 - 登录
@@ -13,7 +14,10 @@
 - 评论
 - 点赞
 - 分页
+- 升序
+- 降序
 - 其他功能完善中。。。
+
 
 ``` bash
 # install dependencies
