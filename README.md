@@ -4,6 +4,17 @@
 
 ## Build Setup
 
+## 功能
+- 登录
+- 注册
+- 文章发布
+- 文章查看
+- 文章删除
+- 评论
+- 点赞
+- 分页
+- 其他功能完善中。。。
+
 ``` bash
 # install dependencies
 npm install
