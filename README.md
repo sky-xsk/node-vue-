@@ -33,5 +33,11 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
+```
+步骤：
+开启mogodb,
+运行servers下面的app.js
+运行单页项目
+```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
