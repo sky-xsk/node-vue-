@@ -1,6 +1,6 @@
 # nodeVueMongodb 练手项目
 
-> nodeVueMongodb
+> 一个简单的文章发布预览系统
 
 >主要在于node，
 >vue暂时没有细写！vue暂时没有细写！vue暂时没有细写！重要的事情说三遍！

@@ -50,8 +50,8 @@ export default {
             account:this.account,
             password:this.password,
         }
-        this.$http.post('/api/users/createUser', params).then((response) => {
-            console.log(response.body)
+        this.$http.post('/api/users/createUser', parms).then((response) => {
+            console.log(response.body);
         })
     },
     //登录
@@ -61,7 +61,8 @@ export default {
             password:this.passwords,
         }
         this.$http.post('/api/users/logins', params).then((response) => {
-            console.log(response.body)
+            console.log(response.body);
+            this.$router.push({path:'/postnews'});
         })
     },
       handleAvatarSuccess(res, file) {
@@ -108,7 +109,6 @@ export default {
     display: block;
   }
 </style>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 </style>

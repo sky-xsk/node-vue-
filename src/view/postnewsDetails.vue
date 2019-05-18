@@ -5,7 +5,7 @@
     <p v-html="detials.desc"></p>
      <div>
        <el-row>
-          <el-col :span="24"> <el-button type="danger" :disabled="detials.zan" @click="tapZan()"> 给个赞吧！ ({{detials.__v}})</el-button></el-col>
+          <el-col :span="24"> <el-button type="danger"  @click="tapZan()"> 给个赞吧！ ({{detials.__v}})</el-button></el-col>
        </el-row>
     </div>
     <h3>用户评论</h3>
