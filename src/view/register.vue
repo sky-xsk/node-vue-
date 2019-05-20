@@ -84,11 +84,15 @@ export default {
     },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
+        this.$message({
+          message: '恭喜你，图片上传成功',
+          type: 'success'
+        });
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg' || 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG || !isPNG) {
+        if (!isJPG) {
           this.$message.error('上传头像图片只能是 JPG 格式或者PNG!');
         }
         if (!isLt2M) {
@@ -96,8 +100,6 @@ export default {
         }
         return isJPG && isLt2M;
       }
-
-
   }
 }
 </script>

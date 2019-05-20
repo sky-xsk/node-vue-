@@ -48,7 +48,7 @@ router.post('/logins', function(req,res,next){
         if(req.body.password == result[0].password){
           req.session.username = req.body.account;
           //console.log(req.session.username)
-          res.json({ data: "登录成功", code: 1 })
+          res.json({ data: "登录成功", code: 1 , username: req.session.username})
           return;
         }else{
           res.json({ data: "密码错误", code: -3})

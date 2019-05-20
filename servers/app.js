@@ -8,19 +8,29 @@ var db = mongoose();
 var bodyParser = require('body-parser');
 var util = require('util');
 var session = require('express-session');
+// socket 服务
 var server = require('http').Server(require('express')());
 var io = require('socket.io')(server).listen(3030);
 io.set('origins', '*:*');
+
 //此处路由待优化
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postnewRouter = require('./routes/postnew');
 var commentRouter = require('./routes/comment');
 
-io.on('connection', function (socket) { 
+// socket实例
+io.on('connection', function (socket) {
   socket.emit('news', {hello: '我是后端发送过来的数据'});
+  io.emit('this', {will: 'be received by everyone'});
+  socket.on('private message', function(from, msg) {
+    console.log('I received a private message by', from, 'saying', msg);
+  })
   socket.on('my other event', function(data){
     console.log(data);
+  })
+  socket.on('disconnect', function() {
+    io.emit('user disconnected');
   })
 })
 

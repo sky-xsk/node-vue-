@@ -85,6 +85,7 @@ export default {
        var ids = this.$route.params.ids;
         this.$http.get('/api/comment/details/'+ ids).then((response) => {
             this.detailsList = response.body.data;
+            console.log( this.detailsList);
             //console.log(this.detailsList);
         })
     },
