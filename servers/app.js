@@ -8,13 +8,21 @@ var db = mongoose();
 var bodyParser = require('body-parser');
 var util = require('util');
 var session = require('express-session');
-
+var server = require('http').Server(require('express')());
+var io = require('socket.io')(server).listen(3030);
+io.set('origins', '*:*');
 //此处路由待优化
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postnewRouter = require('./routes/postnew');
 var commentRouter = require('./routes/comment');
 
+io.on('connection', function (socket) { 
+  socket.emit('news', {hello: 'world'});
+  socket.on('my other event', function(data){
+    console.log(data);
+  })
+})
 
 var app = express();
 // view engine setup
@@ -38,6 +46,8 @@ app.use(session({
     maxAge : 1000*60*60, // 设置 session 的有效时间，单位毫秒
   },
 }))
+
+//socket.io
 
 
 app.use('/api', indexRouter);
