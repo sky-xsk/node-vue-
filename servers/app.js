@@ -18,7 +18,7 @@ var postnewRouter = require('./routes/postnew');
 var commentRouter = require('./routes/comment');
 
 io.on('connection', function (socket) { 
-  socket.emit('news', {hello: 'world'});
+  socket.emit('news', {hello: '我是后端发送过来的数据'});
   socket.on('my other event', function(data){
     console.log(data);
   })

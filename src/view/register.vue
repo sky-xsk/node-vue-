@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+   <h3>登录注册示例</h3>
     <input class="form-control" id="inputEmail3" placeholder="请输入账号" v-model="account">
     <input type="password" class="form-control" id="inputPassword3" placeholder="请输入密码" v-model="password">
     <button type="submit" class="btn btn-default" @click="login">注 册</button>
@@ -22,6 +23,10 @@
         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
     </el-upload>
 
+    <h3>socket示例</h3>
+    
+    <div>此处的值是socket发送过来的:<span style='color: red'> {{testSocketValue}}</span></div>
+    <p>此处还牵扯到一个问题，后端发送的数据，dom不能立即更新，这时候就用上了Vue.nextTick();还有一点需要注意的是，一般使用soket做图表的数据传递，都会遇到这个问题! </p>
 
   </div>
 </template>
@@ -29,7 +34,7 @@
 <script>
 var socket = io.connect('http://localhost:3030');
 export default {
-  name: 'HelloWorld',
+  name: 'register',
   data () {
     return {
         account : '',
@@ -37,25 +42,32 @@ export default {
         accounts : '',
         passwords : '',
         imageUrl: '',
+        testSocketValue: ''
     }
   },
   
   mounted(){
-   socket.on('news', function(data) {
-     console.log(data);
-     socket.emit('my other event', {my : 'data'});
-   })
-    
+    this.testSocket();
   },
 
   methods: {
+    // 测试socket
+    testSocket() {
+      var _this = this;
+      socket.on('news', function(data) {
+        _this.$nextTick(function(){
+          this.testSocketValue = data.hello;
+        })
+        socket.emit('my other event', {my : 'data'});
+      })
+    },
     //注册
     login() {
         var params = {
             account:this.account,
             password:this.password,
         }
-        this.$http.post('/api/users/createUser', parms).then((response) => {
+        this.$http.post('/api/users/createUser', params).then((response) => {
             console.log(response.body);
         })
     },
@@ -74,10 +86,10 @@ export default {
         this.imageUrl = URL.createObjectURL(file.raw);
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
+        const isJPG = file.type === 'image/jpeg' || 'image/png';
         const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+        if (!isJPG || !isPNG) {
+          this.$message.error('上传头像图片只能是 JPG 格式或者PNG!');
         }
         if (!isLt2M) {
           this.$message.error('上传头像图片大小不能超过 2MB!');
